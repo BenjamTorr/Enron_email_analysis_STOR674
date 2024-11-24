@@ -1,0 +1,104 @@
+---
+title: "Explore_data"
+author: "Yang Xiang and Benjamin Torres"
+date: "2024-11-24"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Enron data set initial exploration
+
+In this document we explore the dataset. This datasets contains emails from the extinctict company Enron. Our first goal is the obtain the information from the folders once downloaded the data.
+
+We will start by loading some files and the dataset
+
+```{r}
+rm(list=ls())
+
+source("D:/UNC/PhD UNC/Second Year/STOR 674/Project/git/Enron_email_analysis_STOR674/scripts/R scripts/data_utils.R")
+setwd("D:/UNC/PhD UNC/Second Year/STOR 674/Project/git/Enron_email_analysis_STOR674/enron_mail_20150507")
+emails.all.files <- list.files("./maildir/", full.names = T, recursive = T)
+paste("The number of emails in this dataset: ", length(emails.all.files))
+```
+
+We can see that our functions passed the tests and that we have a huge amount of emails!
+Now lets try to understand what is in this emails. We will use a predefined function (see data_utils.R for extra information) Lets see only the first 10 for computational convenience.
+
+```{r}
+set.seed(123) # seed for reproducibility
+email_data = parse_all_emails(emails.all.files) # this may take some time
+email_data$Sender[1:10]
+```
+AS we see, not all of the emails are internal emails, there are people outside of enron getting email. For the purpose of this analysis, we will eliminate those and only stay with the receivers that are within enron.
+
+```{r}
+sender_enron <- email_data$Sender[grepl("@enron.com", email_data$Sender)]
+receiver <- split_receivers(email_data)$Receiver # expand table for multiple receivers(see data_utils.R)
+receiver_enron <- receiver[grepl("@enron.com", receiver)] #get only enron emails
+
+receiver_enron
+```
+
+Now, we want to see how many unique users we have within enron.
+
+```{r}
+# The number of unique users in the company
+paste("The number of unique users in the company ", nrow(data.frame(item = c(sender_enron,receiver_enron)) %>%
+       count(item, name = "frequency")))
+```
+## Descriptive analysis 
+
+Now, we move to a more graphical way to present the information. The first point we explore is the frequency of sent emails. Most people only send a small amount emails.
+
+```{r}
+# Plot figures to show the total number of emails sending and receiving by each employee in this company. 
+df_from <- data.frame(item = sender_enron) %>%
+  count(item, name = "frequency")
+ggplot(df_from, aes(x = frequency)) +
+  geom_histogram(binwidth = 1, fill = "skyblue", color = "black") +
+  labs(title = "Histogram of Item Frequencies", x = "Number of Sent Emails", y = "Count") +
+  theme_minimal()
+```
+Now, who are the people who sent the most emails and receive the most emails? We make some table operations to get this information.
+
+```{r}
+df_to <- data.frame(item = receiver_enron) %>%
+  count(item, name = "frequency")
+ggplot(df_to, aes(x = frequency)) +
+  geom_histogram(binwidth = 1, fill = "skyblue", color = "black") +
+  labs(title = "Histogram of Item Frequencies", x = "Number of Received Emails", y = "Count") +
+  theme_minimal()
+
+# show top 10 people who sent the most emails
+df_from[order(df_from[,2],decreasing = TRUE)[1:10],]
+# show top 10 people who got the most emails
+df_to[order(df_to[,2],decreasing = TRUE)[1:10],]
+```
+If we notice, a bunch of users just sent a couple emails and did not interect further. For the analysis this users may not be that useful. In the cell below we explore how many active users (2 or more email sent and received) are in enron.
+
+```{r}
+# All users in the company
+all_users <- data.frame(item = c(sender_enron, receiver_enron)) %>%
+  count(item, name = "frequency")
+all_users <- all_users[,1]
+
+# Remove inactive users (keep users that at least send 2 emails and receive 2 emails)
+n <- length(all_users)
+active_users <- NULL
+for (i in 1:n){
+  if (length(which(df_from == all_users[i])) > 0){
+    if (length(which(df_to == all_users[i])) > 0){
+      if ((df_from[which(df_from == all_users[i]),][2] > 1) & (df_to[which(df_to == all_users[i]),][2] > 1)){
+        active_users <- c(active_users, all_users[i])
+      }
+      
+    }
+  }
+}
+paste("The number of active users in the company", length(active_users))
+
+```
+
