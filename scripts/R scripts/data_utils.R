@@ -14,6 +14,8 @@ library(tidyverse)
 library(testthat)
 library(assertthat)
 
+#this is temporal
+setwd("D:/UNC/PhD UNC/Second Year/STOR 674/Project/git/Enron_email_analysis_STOR674/enron_mail_20150507")
 ###### Functions ############################
 #############################################
 #############################################
