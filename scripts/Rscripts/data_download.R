@@ -11,7 +11,7 @@ library(here)
 
 # Set path
 setwd(here())
-
+setwd('data')
 
 
 # get_enron_data: download the enron data from the url to specified folder
