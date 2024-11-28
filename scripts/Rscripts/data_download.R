@@ -51,5 +51,11 @@ get_word2vec = function(data_url = 'https://huggingface.co/NathaNn1111/word2vec-
   print('Downloaded.')
 }
 
-
-get_enron_data()
+if(!file.exists('enron_mail_20150507')){
+  cat('Enron data set already downloaded, if you want to download it again delete the folder enron_mail_20150507 first.')
+  get_enron_data()  
+}
+if(!file.exists('GoogleNews-vectors-negative300.bin')){
+  cat('word2vec encoding already downloaded, if you want to download it again delete the file GoogleNews-vectors-negative300.bin.')
+  get_word2vec()  
+}
