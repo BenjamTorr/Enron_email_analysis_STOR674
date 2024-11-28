@@ -30,6 +30,8 @@ get_enron_data = function(data_path = 'http://www.cs.cmu.edu/~enron/enron_mail_2
   print('Downloaded.')
   print('decompressing...')
   untar(data_path, exdir = 'enron_mail_20150507')
-  decompresed('Done.')
-  file.remove(data_path)
+  #decompresed('Done.')
+  #file.remove(data_path)
 }
+
+get_enron_data()

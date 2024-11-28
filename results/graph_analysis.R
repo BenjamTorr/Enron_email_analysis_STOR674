@@ -6,10 +6,10 @@ library(here)
 setwd(here())
 
 # Load data
-load("../data/cleaned_email_data.RData")
+load("./data/cleaned_email_data.RData")
 
 # Source the functions
-source("../scripts/Rscripts/data_utils.R")
+source("./scripts/Rscripts/data_utils.R")
 
 ## Get edges between users
 edges = NULL

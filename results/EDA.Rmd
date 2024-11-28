@@ -21,10 +21,11 @@ rm(list=ls())
 library(here)
 
 # Set working directory and source the processing functions
-setwd(here())
-source("../scripts/Rscripts/data_utils.R")
+#setwd(here())
 
-emails.all.files <- list.files("../data/maildir/", full.names = T, recursive = T)
+source(here("scripts/Rscripts/data_utils.R"))
+
+emails.all.files <- list.files(here("data/enron_mail_20150507/maildir/"), full.names = T, recursive = T)
 paste("The number of emails in this dataset: ", length(emails.all.files))
 ```
 
@@ -33,17 +34,21 @@ Now lets try to understand what is in this emails. We will use a predefined func
 
 ```{r}
 set.seed(123) # seed for reproducibility
+options(warn = -1) # mute the warnings when parse emails
 email_data = parse_all_emails(emails.all.files) # this may take some time
+options(warn = 0) # unmute the warnings
+#email_data <- bind_rows(lapply(emails.all.files, parse_email)) # this may take some time
 email_data$Sender[1:10]
+head(email_data)
 ```
-AS we see, not all of the emails are internal emails, there are people outside of enron getting email. For the purpose of this analysis, we will eliminate those and only stay with the receivers that are within enron.
+As we see, not all of the emails are internal emails, there are people outside of enron getting email. For the purpose of this analysis, we will eliminate those and only stay with the receivers that are within enron.
 
 ```{r}
 sender_enron <- email_data$Sender[grepl("@enron.com", email_data$Sender)]
 receiver <- split_receivers(email_data)$Receiver # expand table for multiple receivers(see data_utils.R)
-receiver_enron <- receiver[grepl("@enron.com", receiver)] #get only enron emails
+receiver_enron <- receiver[grepl("@enron.com", receiver)] #get only enron emails (as we get only enron emails, there is no user with multiple emails)
 
-receiver_enron
+head(receiver_enron)
 ```
 
 Now, we want to see how many unique users we have within enron.
@@ -98,7 +103,7 @@ paste("The number of active users in the company: ", length(active_users))
 Then we save the cleaned email data, all users and active users for further analysis.
 
 ```{r}
-save(email_data, all_users, active_users, file = "../data/cleaned_email_data.RData")
+save(email_data, all_users, active_users, file = here("data/cleaned_email_data.RData"))
 ```
 
 
