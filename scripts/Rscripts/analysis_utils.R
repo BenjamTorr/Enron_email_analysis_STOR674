@@ -1,5 +1,6 @@
 library(caret)
 library(randomForest)
+library(word2vec)
 
 
 # folder_classification: Define a function to classify the emails for each person based on their folders
@@ -82,5 +83,28 @@ folder_classification <- function(model, email_data, user_name){
   # Evaluate model performance
   conf_matrix <- confusionMatrix(predictions, test_labels)
   print(conf_matrix)
+  
+}
+
+# get_user_embedding: a function that takes the email data, and transform the names into an embedding using NLP technques
+# Input:
+# - email_data: the cleaned dataset
+# - dimension: the dimension for the embedding
+# - threshold: the threshold to eliminate inactive users
+# Output:
+# - embeddings: a dataframe with the embeddings per user
+# - interaction_embedding: dataframe with sender -> receiver plus the embedding of the sender and embedding of receiver
+
+
+get_user_embedding = function(email_data, dimension, threshold){
+  active_interactions = clean_sender_receiver(email_data, threshold)
+  sentences = active_interactions$user_context
+  model = word2vec(x = sentences, dim = dimension, type = c('cbow'), stopwords = NULL)
+  embeddings = data.frame(as.matrix(model))
+  embeddings$sender = row.names(embeddings)
+  interaction_embedding_sender = merge(active_interactions, embeddings, by.x = 'sender', by.y = 'sender')
+  interaction_embedding = merge(interaction_embedding_sender, embeddings, by.x = 'receiver', by.y ='sender')
+  
+  return(list(embeddings = embeddings, interaction_embedding = interaction_embedding))
   
 }

@@ -25,7 +25,7 @@ get_enron_data = function(data_path = 'http://www.cs.cmu.edu/~enron/enron_mail_2
   
   #set high timeout as data is large
   options(timeout = 1e6)
-  print('Downloading...')
+  cat('Please be patient, this can take a while.\n Downloading...')
   download.file(data_path, folder_path)
   print('Downloaded.')
   print('decompressing...')
@@ -34,4 +34,30 @@ get_enron_data = function(data_path = 'http://www.cs.cmu.edu/~enron/enron_mail_2
   #file.remove(data_path)
 }
 
-get_enron_data()
+# get_word2vec: download the Google News Negative 300 binary file for word2vec
+# Input:
+# - data_url: url where the file can be downloaded
+# - data_path: file name after downloaded
+# Output:
+# - None
+
+get_word2vec = function(data_url = 'https://huggingface.co/NathaNn1111/word2vec-google-news-negative-300-bin/resolve/main/GoogleNews-vectors-negative300.bin?download=true', 
+                          data_path = 'GoogleNews-vectors-negative300.bin'){
+  
+  #set high timeout as data is large
+  options(timeout = 1e6)
+  cat('Please be patient, this can take a while.\n Downloading wor2vec encoding...')
+  download.file(data_url, data_path)
+  print('Downloaded.')
+}
+
+if(!file.exists('enron_mail_20150507')){
+  get_enron_data()  
+}else{
+  cat('Enron data set already downloaded, if you want to download it again delete the folder enron_mail_20150507 first.')
+}
+if(!file.exists('GoogleNews-vectors-negative300.bin')){
+  get_word2vec()  
+}else{
+  cat('word2vec encoding already downloaded, if you want to download it again delete the file GoogleNews-vectors-negative300.bin.')
+}
