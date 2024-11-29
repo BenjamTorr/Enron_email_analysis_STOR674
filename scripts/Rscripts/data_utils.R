@@ -142,4 +142,34 @@ get_active_users <- function(df_from, df_to, all_users, threshold){
   return(active_users)
 }
 
+##----------------------------------------------------------------------------------
+
+# clean_sender_receiver: Clean the email data set to make it appropiate for word2vec embedding,
+#it creates sender receiver relationship and only takes the people that sent and receiver a threshold number of emails
+# Input:
+# - data: email_data as obtained in the script
+# - threshold: the threshold that identifies active users
+# Output:
+# - active_interations: a data frame containing relevant users and who they message along with a sentence for using as context in word2vec
+
+clean_sender_receiver = function(data, threshold){
+  splitted_data = split_receivers(data)
+  filtered_data = splitted_data[grepl("@enron.com", splitted_data$Sender) & grepl("@enron.com", splitted_data$Receiver),]
+  sender = gsub('\\.', '', gsub('@enron.com', '', filtered_data$Sender))
+  receiver = gsub('\\.','',gsub('@enron.com', '', filtered_data$Receiver))
+  user_context = paste(sender, receiver)
+  
+  raw_interactions = data.frame(sender = sender, receiver = receiver, user_context)
+  
+  sender_counts = table(raw_interactions$sender)
+  receiver_counts = table(raw_interactions$receiver)
+  
+  interactions <- raw_interactions[raw_interactions$sender %in% names(sender_counts[sender_counts >= threshold]) &
+                                     raw_interactions$receiver %in% names(receiver_counts[receiver_counts >= threshold]), ]
+  
+  intersection = intersect(unique(interactions$sender), unique(interactions$receiver))
+  active_interactions = interactions[interactions$sender %in% intersection & interactions$receiver %in% intersection, ]
+  
+  return(active_interactions)
+}
 
