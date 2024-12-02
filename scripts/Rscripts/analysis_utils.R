@@ -11,7 +11,7 @@ library(word2vec)
 # Output:
 # - the outcome of random forest classification on trained and test data
 
-folder_classification <- function(model, email_data, user_name){
+folder_classification <- function(model, email_data, user_name,ntree){
   # Extract data information of this person
   email_person_data <- email_data[which(email_data$User==user_name),]
   email_person_labels <- email_data$Folder[which(email_data$User==user_name)]
@@ -72,7 +72,7 @@ folder_classification <- function(model, email_data, user_name){
   test_labels <- email_person_labels[-trainIndex]
   
   # Train a Random Forest classifier
-  model_rf <- randomForest(x = train_data, y = train_labels)
+  model_rf <- randomForest(x = train_data, y = train_labels, ntree=ntree)
   
   #save the model
   save(model_rf, file = paste0('models/',user_name, '_model.RData' ))
