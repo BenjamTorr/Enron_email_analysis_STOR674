@@ -42,3 +42,23 @@ par(mar = c(1,1,1,1))
 png("Images/interaction_of_active_users.png") 
 plot(g, vertex.size = 5, vertex.label = NA, edge.width=0.1, asp=0.9)
 dev.off()
+
+
+# Use igraph clustring method to cluster the users
+lv <- cluster_louvain(g)
+png("Images/clustering_of_active_users.png") 
+plot(lv, g, vertex.label = NA, vertex.size = 5, edge.width=0.1, asp=0.9)
+dev.off()
+
+
+membership(lv)  # The cluster each node belongs to
+length(unique(membership(lv))) # Number of clusters
+sizes(lv) # Sizes of each cluster
+
+# Visualize the clusters
+V(g)$color <- membership(lv)  # Assign colors to nodes based on clusters
+png("Images/vis_clustering_of_active_users.png") 
+plot(g, vertex.label = NA, vertex.size = 5, edge.width=0.1, asp=0.9)
+#title(main = "visualize of clustering active users")
+dev.off()
+
