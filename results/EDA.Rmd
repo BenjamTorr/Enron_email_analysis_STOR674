@@ -94,9 +94,9 @@ all_users <- data.frame(item = c(sender_enron, receiver_enron)) %>%
   count(item, name = "frequency")
 all_users <- all_users[,1]
 
-# Remove inactive users (keep users that at least send 2 emails and receive 2 emails)
-active_users <- get_active_users(df_from, df_to, all_users, threshold = 1)
-paste("The number of active users in the company: ", length(active_users))
+# Remove inactive users (keep users that at least send 200 emails and receive 200 emails)
+active_users <- get_active_users(df_from, df_to, all_users, threshold = 199)
+paste("The number of active users (threshold >=200) in the company: ", length(active_users))
 
 ```
 
