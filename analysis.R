@@ -19,7 +19,6 @@ for (pkg in packages) {
     install.packages(pkg)
   }
 }
-cat(str(rmarkdown::pandoc_version()))
 library(knitr)
 #------------------------ Run analysis -------------------------------------------#
 cat('\n\n\n')
