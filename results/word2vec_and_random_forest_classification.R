@@ -43,7 +43,7 @@ library(ggplot2)
 
 png("word2vec_rf_classification.png") 
 # Create the plot
-ggplot(data = cm_df, aes(x = Prediction, y = Reference, fill = Freq)) +
+ggplot(data = as.data.frame(cm_df), aes(x = Prediction, y = Reference, fill = Freq)) +
   geom_tile(color = "black") +  # Create heatmap
   geom_text(aes(label = Freq), color = "black", size = 5) +  # Add numbers
   scale_fill_gradient(low = "white", high = "blue") +  # Adjust color scale
