@@ -38,7 +38,7 @@ wordcloud(
   colors = brewer.pal(8, "Dark2")   # Color palette
 )
 
-png("wordcloud_high_res.png", width = 10, height = 10, units = "in", res = 300)  # 300 DPI
+png("Images/wordcloud_high_res.png", width = 10, height = 10, units = "in", res = 300)  # 300 DPI
 wordcloud(names(word_freq), freq = word_freq, min.freq = 2, max.words = 200, random.order = FALSE, colors = brewer.pal(8, "Dark2"))
 dev.off()
 

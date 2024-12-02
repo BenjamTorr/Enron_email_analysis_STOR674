@@ -39,6 +39,6 @@ for (i in 1:dim(email_data)[1]){
 library("igraph")
 g <- make_graph(edges,  n=length(active_users), directed = FALSE)
 par(mar = c(1,1,1,1))
-png("interaction_of_active_users.png") 
+png("Images/interaction_of_active_users.png") 
 plot(g, vertex.size = 5, vertex.label = NA, edge.width=0.1, asp=0.9)
 dev.off()

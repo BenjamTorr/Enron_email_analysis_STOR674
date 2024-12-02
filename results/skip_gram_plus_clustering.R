@@ -3,6 +3,8 @@
 ##
 ###
 #################################
+
+
 #load libraries
 library(ggplot2)
 library(word2vec)
@@ -46,7 +48,7 @@ plot1 = ggplot() +
 
 plot1
 
-ggsave(filename = 'top_users_embedding.png', plot = plot1, dpi = 300)
+ggsave(filename = 'Images/top_users_embedding.png', plot = plot1, dpi = 300)
 
 plot2 = ggplot() +
         # Plot the sender points
@@ -59,7 +61,7 @@ plot2 = ggplot() +
 
 plot2
 
-ggsave(filename = 'top_users_embedding_plus_interaction.png', plot = plot2, dpi = 300)
+ggsave(filename = 'Images/top_users_embedding_plus_interaction.png', plot = plot2, dpi = 300)
 
 
 plot3 = ggplot() +
@@ -74,4 +76,4 @@ plot3 = ggplot() +
 
 plot3
 
-ggsave(filename = 'top_users_embedding_plus_interaction_clustered.png', plot = plot3, dpi = 300)
+ggsave(filename = 'Images/top_users_embedding_plus_interaction_clustered.png', plot = plot3, dpi = 300)

@@ -74,6 +74,9 @@ folder_classification <- function(model, email_data, user_name){
   # Train a Random Forest classifier
   model_rf <- randomForest(x = train_data, y = train_labels)
   
+  #save the model
+  save(model_rf, file = paste0('models/',user_name, '_model.RData' ))
+  
   # Print model summary
   print(model_rf)
   
