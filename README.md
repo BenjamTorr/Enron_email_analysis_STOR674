@@ -16,9 +16,7 @@ The structure of the project is the following
 │   ├── README.md                                           | Explanation of the files that are contained
 ├── models                                                  | Folder where the models for user-specific folder classification will be saved.
 │   ├── README.md                                           | Explanation of the files type.
-├── mydocker                                                | Folder contanining the docker images
-│   ├── TBD                                                 |
-│   └── TBD                                                 |
+├── Dockerfile                                              | Run the docker file to build the docker image
 ├── results                                                 | This folder containts the R script related to the analysis itself.
 │   ├── EDA.Rmd                                             | Run the Rmd from the raw data and obtain the clean data
 |   |── graph_analysis.R                                    | Creates igraph visualization for the data
@@ -41,7 +39,7 @@ The structure of the project is the following
 ```
 ## How to run it?
 ### Via script
-Use the docker image built to run the analysis using the analysis.R script or if you already have a system with R installled run analysis.R
+Use the docker image built to run the analysis using the analysis.R script or if you already have a system with R installled run analysis.R. 
 
 ### Manually
   -  Install R/Rstudio
