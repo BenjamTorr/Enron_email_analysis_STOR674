@@ -24,7 +24,7 @@ library(here)
 #setwd(here())
 
 source(here("scripts/Rscripts/data_utils.R"))
-
+source(here('scripts/Rscripts/data_download.R'))
 emails.all.files <- list.files(here("data/enron_mail_20150507/maildir/"), full.names = T, recursive = T)
 paste("The number of emails in this dataset: ", length(emails.all.files))
 ```
