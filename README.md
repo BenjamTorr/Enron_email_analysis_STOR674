@@ -57,7 +57,8 @@ Once this process is done, you can run the following to check  the results.
 
 ```bash
 docker run -it my_image /bin/bash
-```bash
+```
+
 
 ### Manually
   -  Install R/Rstudio
