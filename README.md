@@ -41,6 +41,15 @@ The structure of the project is the following
 ### Via script
 Use the docker image built to run the analysis using the analysis.R script or if you already have a system with R installled run analysis.R. 
 
+For the dockerfile, use the following command to build the docker image
+```bash
+docker build -t my_image . 
+
+Then run the following to get data processing and analysis results.
+```bash
+docker run my_image 
+
+
 ### Manually
   -  Install R/Rstudio
   -  Install the packages listed in the analysis.R script
