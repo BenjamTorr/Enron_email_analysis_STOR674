@@ -47,7 +47,7 @@ For the dockerfile, use the following command to build the docker image
 docker build -t my_image . 
 ```
 
-Then run the following to get data processing and analysis results.
+Then run the following to get data processing and analysis results. This takes about 70 minutes.
 
 ```bash
 docker run my_image 
