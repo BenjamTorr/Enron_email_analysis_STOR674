@@ -53,6 +53,12 @@ Then run the following to get data processing and analysis results. This takes a
 docker run my_image 
 ```
 
+Once this process is done, you can run the following to check  the results.
+
+```bash
+docker run -it my_image /bin/bash
+```bash
+
 ### Manually
   -  Install R/Rstudio
   -  Install the packages listed in the analysis.R script
