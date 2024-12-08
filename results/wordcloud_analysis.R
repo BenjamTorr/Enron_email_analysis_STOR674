@@ -10,7 +10,9 @@ load("./data/cleaned_email_data.RData")
 
 # Convert all the email content to a huge character
 n = nrow(email_data)
-text <- paste(email_data$Content[sample(1:n,n/3)], collapse = " ")
+set.seed(124)
+sampled_emails <- sample(1:n,n/3)
+text <- paste(email_data$Content[sampled_emails], collapse = " ")
 corpus <- Corpus(VectorSource(text))
 
 # Preprocess the text
