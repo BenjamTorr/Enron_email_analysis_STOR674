@@ -41,7 +41,7 @@ cm_df <- conf_mat$table
 
 library(ggplot2)
 
-png("word2vec_rf_classification.png") 
+png("Images/word2vec_rf_classification.png") 
 # Create the plot
 ggplot(data = as.data.frame(cm_df), aes(x = Prediction, y = Reference, fill = Freq)) +
   geom_tile(color = "black") +  # Create heatmap
