@@ -44,7 +44,7 @@ Use the docker image built to run the analysis using the analysis.R script or if
 For the dockerfile, use the following command to build the docker image
 
 ```bash
-docker build -t my_image . 
+docker build --platform=linux/amd64 -t my_image .
 ```
 
 Then run the following to get data processing and analysis results. This takes about 70 minutes.
